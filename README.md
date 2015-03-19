@@ -41,7 +41,7 @@ should just bail-out as fast as it can.
 
 ## logrus (Text)
 
-|TestName|Ops|Nanoseconds/Op|Bytes/Op|Allocs/Op|
+|TestName|Ops|Nanosecs/Op|Bytes/Op|Allocs/Op|
 |--------|---|--------------|--------|---------|
 |BenchmarkLogrusTextParallel|1000000|5779|915|18|
 |BenchmarkLogrusTextParallel-2|2000000|3722|920|18|
@@ -53,7 +53,7 @@ should just bail-out as fast as it can.
 
 ## log15 (Text)
 
-|TestName|Ops|Nanoseconds/Op|Bytes/Op|Allocs/Op|
+|TestName|Ops|Nanosecs/Op|Bytes/Op|Allocs/Op|
 |--------|---|--------------|--------|---------|
 |BenchmarkLog15TextParallel|1000000|7674|1125|24|
 |BenchmarkLog15TextParallel-2|1000000|8843|1129|24|
@@ -64,7 +64,7 @@ should just bail-out as fast as it can.
 
 ## go-logging (Text)
 
-|TestName|Ops|Nanoseconds/Op|Bytes/Op|Allocs/Op|
+|TestName|Ops|Nanosecs/Op|Bytes/Op|Allocs/Op|
 |--------|---|--------------|--------|---------|
 |BenchmarkGologgingTextParallel|2000000|4050|842|14|
 |BenchmarkGologgingTextParallel-2|3000000|2794|848|14|
@@ -75,7 +75,7 @@ should just bail-out as fast as it can.
 
 ## seelog (Text)
 
-|TestName|Ops|Nanoseconds/Op|Bytes/Op|Allocs/Op|
+|TestName|Ops|Nanosecs/Op|Bytes/Op|Allocs/Op|
 |--------|---|--------------|--------|---------|
 |BenchmarkSeelogTextParallel|2000000|3914|442|12|
 |BenchmarkSeelogTextParallel-2|1000000|5253|444|12|
@@ -86,7 +86,7 @@ should just bail-out as fast as it can.
 
 ## logrus (JSON)
 
-|TestName|Ops|Nanoseconds/Op|Bytes/Op|Allocs/Op|
+|TestName|Ops|Nanosecs/Op|Bytes/Op|Allocs/Op|
 |--------|---|--------------|--------|---------|
 |BenchmarkLogrusJSONParallel|500000|12472|2532|49|
 |BenchmarkLogrusJSONParallel-2|1000000|8437|2545|49|
@@ -97,7 +97,7 @@ should just bail-out as fast as it can.
 
 ## log15 (JSON)
 
-|TestName|Ops|Nanoseconds/Op|Bytes/Op|Allocs/Op|
+|TestName|Ops|Nanosecs/Op|Bytes/Op|Allocs/Op|
 |--------|---|--------------|--------|---------|
 |BenchmarkLog15JSONParallel|500000|12154|2025|47|
 |BenchmarkLog15JSONParallel-2|500000|13911|2027|47
