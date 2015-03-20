@@ -1,6 +1,14 @@
-.PHONY: all deps test
+GOTEST_FLAGS=-cpu=1,2,4 -benchmem -benchtime=5s
 
-all: deps test test-text test-json
+TEXT_PKGS=Logrus Log15 Gologging Seelog
+JSON_PKGS=Logrus Log15
+
+TEXT_PKG_TARGETS=$(addprefix test-text-,$(TEXT_PKGS))
+JSON_PKG_TARGETS=$(addprefix test-json-,$(JSON_PKGS))
+
+.PHONY: all deps test test-text test-json $(TEXT_PKG_TARGETS) $(JSON_PKG_TARGETS)
+
+all: deps test
 
 deps:
 	go get -u github.com/Sirupsen/logrus
@@ -10,12 +18,12 @@ deps:
 
 test: test-text test-json
 
-test-text:
-	go test -cpu=1,2,4 -benchmem -benchtime=5s -bench Logrus.*Text
-	go test -cpu=1,2,4 -benchmem -benchtime=5s -bench Log15.*Text
-	go test -cpu=1,2,4 -benchmem -benchtime=5s -bench Gologging.*Text
-	go test -cpu=1,2,4 -benchmem -benchtime=5s -bench Seelog.*Text
+test-text: $(TEXT_PKG_TARGETS)
 
-test-json:
-	go test -cpu=1,2,4 -benchmem -benchtime=5s -bench Logrus.*JSON
-	go test -cpu=1,2,4 -benchmem -benchtime=5s -bench Log15.*JSON
+$(TEXT_PKG_TARGETS): test-text-%:
+	go test $(GOTEST_FLAGS) -bench "$*.*Text"
+
+test-json: $(JSON_PKG_TARGETS)
+
+$(JSON_PKG_TARGETS): test-json-%:
+	go test $(GOTEST_FLAGS) -bench "$*.*JSON"
