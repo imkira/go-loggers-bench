@@ -47,7 +47,7 @@ in future versions!
 ## logrus (Text)
 
 |test|ops|ns/op|bytes/Op|allocs/op|
-|----|---|--------------|---------|
+|----|---|-----|--------|---------|
 |BenchmarkLogrusTextPositive|1000000|5738|915|18|
 |BenchmarkLogrusTextPositive-2|2000000|3718|920|18|
 |BenchmarkLogrusTextPositive-4|3000000|2187|924|18|
@@ -58,7 +58,7 @@ in future versions!
 ## log15 (Text)
 
 |test|ops|ns/op|bytes/Op|allocs/op|
-|----|---|--------------|---------|
+|----|---|-----|--------|---------|
 |BenchmarkLog15TextPositive|1000000|7437|1125|24|
 |BenchmarkLog15TextPositive-2|1000000|8782|1129|24|
 |BenchmarkLog15TextPositive-4|1000000|8816|1136|24|
@@ -69,7 +69,7 @@ in future versions!
 ## go-logging (Text)
 
 |test|ops|ns/op|bytes/Op|allocs/op|
-|----|---|--------------|---------|
+|----|---|-----|--------|---------|
 |BenchmarkGologgingTextPositive|2000000|4010|842|14|
 |BenchmarkGologgingTextPositive-2|3000000|2766|848|14|
 |BenchmarkGologgingTextPositive-4|5000000|1805|853|14|
@@ -80,7 +80,7 @@ in future versions!
 ## seelog (Text)
 
 |test|ops|ns/op|bytes/Op|allocs/op|
-|----|---|--------------|---------|
+|----|---|-----|--------|---------|
 |BenchmarkSeelogTextPositive|2000000|3855|442|12|
 |BenchmarkSeelogTextPositive-2|1000000|5137|444|12|
 |BenchmarkSeelogTextPositive-4|2000000|4630|447|12|
@@ -91,7 +91,7 @@ in future versions!
 ## logrus (JSON)
 
 |test|ops|ns/op|bytes/Op|allocs/op|
-|----|---|--------------|---------|
+|----|---|-----|--------|---------|
 |BenchmarkLogrusJSONPositive|500000|13055|2532|49|
 |BenchmarkLogrusJSONPositive-2|1000000|8256|2543|49|
 |BenchmarkLogrusJSONPositive-4|2000000|4831|2558|49|
@@ -102,7 +102,7 @@ in future versions!
 ## log15 (JSON)
 
 |test|ops|ns/op|bytes/Op|allocs/op|
-|----|---|--------------|---------|
+|----|---|-----|--------|---------|
 |BenchmarkLog15JSONPositive|500000|12213|2025|47|
 |BenchmarkLog15JSONPositive-2|500000|13813|2027|47|
 |BenchmarkLog15JSONPositive-4|500000|14067|2029|47|
