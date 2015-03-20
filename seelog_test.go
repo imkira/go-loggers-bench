@@ -6,7 +6,7 @@ import (
 	log "github.com/cihub/seelog"
 )
 
-func BenchmarkSeelogTextFilterParallel(b *testing.B) {
+func BenchmarkSeelogTextNegative(b *testing.B) {
 	stream := &blackholeStream{}
 	logger, err := log.LoggerFromWriterWithMinLevelAndFormat(stream, log.ErrorLvl, "%Time %Level %Msg")
 	if err != nil {
@@ -26,7 +26,7 @@ func BenchmarkSeelogTextFilterParallel(b *testing.B) {
 	}
 }
 
-func BenchmarkSeelogTextParallel(b *testing.B) {
+func BenchmarkSeelogTextPositive(b *testing.B) {
 	stream := &blackholeStream{}
 	logger, err := log.LoggerFromWriterWithMinLevelAndFormat(stream, log.TraceLvl, "%Time %Level %Msg")
 	if err != nil {

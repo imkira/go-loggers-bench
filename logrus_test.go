@@ -6,7 +6,7 @@ import (
 	log "github.com/Sirupsen/logrus"
 )
 
-func BenchmarkLogrusTextParallel(b *testing.B) {
+func BenchmarkLogrusTextPositive(b *testing.B) {
 	stream := &blackholeStream{}
 	logger := log.New()
 	logger.Formatter = &log.TextFormatter{
@@ -28,7 +28,7 @@ func BenchmarkLogrusTextParallel(b *testing.B) {
 	}
 }
 
-func BenchmarkLogrusTextFilterParallel(b *testing.B) {
+func BenchmarkLogrusTextNegative(b *testing.B) {
 	stream := &blackholeStream{}
 	logger := log.New()
 	logger.Level = log.ErrorLevel
@@ -51,7 +51,7 @@ func BenchmarkLogrusTextFilterParallel(b *testing.B) {
 	}
 }
 
-func BenchmarkLogrusJSONFilterParallel(b *testing.B) {
+func BenchmarkLogrusJSONNegative(b *testing.B) {
 	stream := &blackholeStream{}
 	logger := log.New()
 	logger.Level = log.ErrorLevel
@@ -74,7 +74,7 @@ func BenchmarkLogrusJSONFilterParallel(b *testing.B) {
 	}
 }
 
-func BenchmarkLogrusJSONParallel(b *testing.B) {
+func BenchmarkLogrusJSONPositive(b *testing.B) {
 	stream := &blackholeStream{}
 	logger := log.New()
 	logger.Formatter = &log.JSONFormatter{}

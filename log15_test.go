@@ -6,7 +6,7 @@ import (
 	log "gopkg.in/inconshreveable/log15.v2"
 )
 
-func BenchmarkLog15TextFilterParallel(b *testing.B) {
+func BenchmarkLog15TextNegative(b *testing.B) {
 	stream := &blackholeStream{}
 	logger := log.New()
 	logger.SetHandler(log.LvlFilterHandler(
@@ -26,7 +26,7 @@ func BenchmarkLog15TextFilterParallel(b *testing.B) {
 	}
 }
 
-func BenchmarkLog15TextParallel(b *testing.B) {
+func BenchmarkLog15TextPositive(b *testing.B) {
 	stream := &blackholeStream{}
 	logger := log.New()
 	logger.SetHandler(log.StreamHandler(stream, log.LogfmtFormat()))
@@ -43,7 +43,7 @@ func BenchmarkLog15TextParallel(b *testing.B) {
 	}
 }
 
-func BenchmarkLog15JSONFilterParallel(b *testing.B) {
+func BenchmarkLog15JSONNegative(b *testing.B) {
 	stream := &blackholeStream{}
 	logger := log.New()
 	logger.SetHandler(log.LvlFilterHandler(
@@ -63,7 +63,7 @@ func BenchmarkLog15JSONFilterParallel(b *testing.B) {
 	}
 }
 
-func BenchmarkLog15JSONParallel(b *testing.B) {
+func BenchmarkLog15JSONPositive(b *testing.B) {
 	stream := &blackholeStream{}
 	logger := log.New()
 	logger.SetHandler(log.StreamHandler(stream, log.JsonFormat()))
