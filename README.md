@@ -27,85 +27,96 @@ make
 
 # Results
 
-I ran these tests on MacOSX 10.9.5 using a 4-Core 2Ghz Intel Core i7 MacBookPro
-with 16GB GB 1600 MHz DDR3 memory.
+I ran these tests on Mac OSX 10.11.4 using 1.6 GHz Intel Core i5 Macbook Air
+with 8 GB 1600 MHz DDR3 memory.
 
-Overall, logrus performed the best.
+Overall, Go kit performed the best, though it has a quirky way of specifying
+levels.
 
-I was surprised with log15 because it seemed
-not to take advantage of the 2 or 4 goroutines. I believe this is because it
-probably performs most of its operations inside some mutext-protected execution
-path right before flushing the log to the output stream.
+I was surprised with log15 because it seemed not to take advantage of the 2 or 4
+goroutines. I believe this is because it probably performs most of its
+operations inside some mutex-protected execution path right before flushing the
+log to the output stream.
 
-When it comes to negative tests for JSON, both logrus and log15 made too many
-allocations for my taste. This is especially bad if you carpet bomb your
-program with debug-level log lines but want to disable it in production: it
-puts too much unecessary pressure on GC, leads to all sorts of problems
-including memory fragmentation. This is something I would like to see improved
-in future versions!
+When it comes to negative tests for JSON, all loggers made too many allocations
+for my taste. This is especially bad if you carpet bomb your program with
+debug-level log lines but want to disable it in production: it puts too much
+unecessary pressure on GC, leads to all sorts of problems including memory
+fragmentation. This is something I would like to see improved in future
+versions!
 
-## logrus (Text)
+## benchstat
 
-|test|ops|ns/op|bytes/Op|allocs/op|
-|----|---|-----|--------|---------|
-|BenchmarkLogrusTextPositive|1000000|5738|915|18|
-|BenchmarkLogrusTextPositive-2|2000000|3718|920|18|
-|BenchmarkLogrusTextPositive-4|3000000|2187|924|18|
-|BenchmarkLogrusTextNegative|100000000|71.7|16|1|
-|BenchmarkLogrusTextNegative-2|200000000|48.3|16|1|
-|BenchmarkLogrusTextNegative-4|300000000|29.9|16|1|
+### TextPositive
 
-## log15 (Text)
+| test                    | op time     | op alloc sz | op alloc count |
+|-------------------------|-------------|-------------|----------------|
+| GokitTextPositive-4     | 1.65µs ± 4% |   800B ± 0% |      10.0 ± 0% |
+| GologgingTextPositive-4 | 2.11µs ± 6% |   952B ± 0% |      17.0 ± 0% |
+| Log15TextPositive-4     | 8.05µs ±11% | 1.12kB ± 0% |      24.0 ± 0% |
+| LogrusTextPositive-4    | 2.79µs ± 9% |   880B ± 0% |      17.0 ± 0% |
+| SeelogTextPositive-4    | 4.92µs ± 8% |   456B ± 0% |      12.0 ± 0% |
 
-|test|ops|ns/op|bytes/Op|allocs/op|
-|----|---|-----|--------|---------|
-|BenchmarkLog15TextPositive|1000000|7437|1125|24|
-|BenchmarkLog15TextPositive-2|1000000|8782|1129|24|
-|BenchmarkLog15TextPositive-4|1000000|8816|1136|24|
-|BenchmarkLog15TextNegative|10000000|909|128|1|
-|BenchmarkLog15TextNegative-2|20000000|521|128|1|
-|BenchmarkLog15TextNegative-4|20000000|316|128|1|
+### TextNegative
 
-## go-logging (Text)
+| test                    | op time     | op alloc sz | op alloc count |
+|-------------------------|-------------|-------------|----------------|
+| GokitTextNegative-4     |  123ns ± 7% |  64.0B ± 0% |      3.00 ± 0% |
+| GologgingTextNegative-4 |  215ns ± 8% |   160B ± 0% |      3.00 ± 0% |
+| Log15TextNegative-4     |  542ns ±26% |   128B ± 0% |      1.00 ± 0% |
+| LogrusTextNegative-4    | 42.2ns ± 2% |  16.0B ± 0% |      1.00 ± 0% |
+| SeelogTextNegative-4    |  132ns ±13% |  64.0B ± 0% |      3.00 ± 0% |
 
-|test|ops|ns/op|bytes/Op|allocs/op|
-|----|---|-----|--------|---------|
-|BenchmarkGologgingTextPositive|2000000|4010|842|14|
-|BenchmarkGologgingTextPositive-2|3000000|2766|848|14|
-|BenchmarkGologgingTextPositive-4|5000000|1805|853|14|
-|BenchmarkGologgingTextNegative|20000000|394|144|1|
-|BenchmarkGologgingTextNegative-2|30000000|253|144|1|
-|BenchmarkGologgingTextNegative-4|50000000|178|144|1|
+### JSONPositive
 
-## seelog (Text)
+| test                    | op time     | op alloc sz | op alloc count |
+|-------------------------|-------------|-------------|----------------|
+| GokitJSONPositive-4     | 5.13µs ±16% | 1.33kB ± 0% |      36.0 ± 0% |
+| Log15JSONPositive-4     | 12.6µs ±20% | 1.80kB ± 0% |      40.0 ± 0% |
+| LogrusJSONPositive-4    | 6.15µs ±20% | 2.35kB ± 0% |      43.0 ± 0% |
 
-|test|ops|ns/op|bytes/Op|allocs/op|
-|----|---|-----|--------|---------|
-|BenchmarkSeelogTextPositive|2000000|3855|442|12|
-|BenchmarkSeelogTextPositive-2|1000000|5137|444|12|
-|BenchmarkSeelogTextPositive-4|2000000|4630|447|12|
-|BenchmarkSeelogTextNegative|20000000|376|64|3|
-|BenchmarkSeelogTextNegative-2|20000000|313|64|3|
-|BenchmarkSeelogTextNegative-4|20000000|377|64|3|
+### JSONNegative
 
-## logrus (JSON)
+| test                    | op time     | op alloc sz | op alloc count |
+|-------------------------|-------------|-------------|----------------|
+| GokitJSONNegative-4     |  377ns ±16% |   232B ± 0% |      9.00 ± 0% |
+| Log15JSONNegative-4     |  909ns ± 5% |   392B ± 0% |      9.00 ± 0% |
+| LogrusJSONNegative-4    | 1.14µs ±24% |   832B ± 0% |      10.0 ± 0% |
 
-|test|ops|ns/op|bytes/Op|allocs/op|
-|----|---|-----|--------|---------|
-|BenchmarkLogrusJSONPositive|500000|13055|2532|49|
-|BenchmarkLogrusJSONPositive-2|1000000|8256|2543|49|
-|BenchmarkLogrusJSONPositive-4|2000000|4831|2558|49|
-|BenchmarkLogrusJSONNegative|3000000|2677|896|11|
-|BenchmarkLogrusJSONNegative-2|5000000|1704|896|11|
-|BenchmarkLogrusJSONNegative-4|10000000|1164|896|11|
+## Raw data
 
-## log15 (JSON)
+### TextPositive
 
-|test|ops|ns/op|bytes/Op|allocs/op|
-|----|---|-----|--------|---------|
-|BenchmarkLog15JSONPositive|500000|12213|2025|47|
-|BenchmarkLog15JSONPositive-2|500000|13813|2027|47|
-|BenchmarkLog15JSONPositive-4|500000|14067|2029|47|
-|BenchmarkLog15JSONNegative|5000000|1732|392|9|
-|BenchmarkLog15JSONNegative-2|10000000|1095|392|9|
-|BenchmarkLog15JSONNegative-4|10000000|659|392|9|
+| test                             | ops     | ns/op      | bytes/op  | allocs/op    |
+|----------------------------------|---------|------------|-----------|--------------|
+| BenchmarkGokitTextPositive-4     | 1000000 | 1406 ns/op |  352 B/op |  7 allocs/op |
+| BenchmarkGologgingTextPositive-4 | 1000000 | 2021 ns/op |  952 B/op | 17 allocs/op |
+| BenchmarkLog15TextPositive-4     |  200000 | 7688 ns/op | 1120 B/op | 24 allocs/op |
+| BenchmarkLogrusTextPositive-4    | 1000000 | 2679 ns/op |  880 B/op | 17 allocs/op |
+| BenchmarkSeelogTextPositive-4    |  300000 | 4326 ns/op |  456 B/op | 12 allocs/op |
+
+### TextNegative
+
+| test                             | ops      | ns/op       | bytes/op | allocs/op   |
+|----------------------------------|----------|-------------|----------|-------------|
+| BenchmarkGokitTextNegative-4     | 20000000 | 119 ns/op   |  64 B/op | 3 allocs/op |
+| BenchmarkGologgingTextNegative-4 | 10000000 | 210 ns/op   | 160 B/op | 3 allocs/op |
+| BenchmarkLog15TextNegative-4     |  3000000 | 510 ns/op   | 128 B/op | 1 allocs/op |
+| BenchmarkLogrusTextNegative-4    | 50000000 |  45.3 ns/op |  16 B/op | 1 allocs/op |
+| BenchmarkSeelogTextNegative-4    | 10000000 | 116 ns/op   |  64 B/op | 3 allocs/op |
+
+### JSONPositive
+
+| test                          | ops    | ns/op       | bytes/op  | allocs/op    |
+|-------------------------------|--------|-------------|-----------|--------------|
+| BenchmarkGokitJSONPositive-4  | 300000 |  4804 ns/op | 1328 B/op | 36 allocs/op |
+| BenchmarkLog15JSONPositive-4  | 200000 | 11835 ns/op | 1800 B/op | 40 allocs/op |
+| BenchmarkLogrusJSONPositive-4 | 300000 |  5853 ns/op | 2345 B/op | 43 allocs/op |
+
+### JSONNegative
+
+| test                          | ops     | ns/op      | bytes/op | allocs/op    |
+|-------------------------------|---------|------------|----------|--------------|
+| BenchmarkGokitJSONNegative-4  | 5000000 |  328 ns/op | 232 B/op |  9 allocs/op |
+| BenchmarkLog15JSONNegative-4  | 2000000 |  895 ns/op | 392 B/op |  9 allocs/op |
+| BenchmarkLogrusJSONNegative-4 | 1000000 | 1015 ns/op | 832 B/op | 10 allocs/op |
