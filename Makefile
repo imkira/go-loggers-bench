@@ -1,6 +1,6 @@
 GOTEST_FLAGS=-cpu=1,2,4 -benchmem -benchtime=5s
 
-TEXT_PKGS=Gokit Logrus Log15 Gologging Seelog Zerolog
+TEXT_PKGS=Gokit Logrus Log15 Gologging Seelog Zerolog Fortiolog
 JSON_PKGS=Gokit Logrus Log15 Zerolog
 
 TEXT_PKG_TARGETS=$(addprefix test-text-,$(TEXT_PKGS))
@@ -17,6 +17,7 @@ deps:
 	go get -u github.com/cihub/seelog
 	go get -u github.com/go-kit/kit/log
 	go get -u github.com/rs/zerolog
+	go get -u fortio.org/fortio
 
 test: test-text test-json
 
