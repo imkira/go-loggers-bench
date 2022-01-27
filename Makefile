@@ -11,7 +11,7 @@ JSON_PKG_TARGETS=$(addprefix test-json-,$(JSON_PKGS))
 all: deps test
 
 deps:
-	go get -u github.com/Sirupsen/logrus
+	go get -u github.com/sirupsen/logrus
 	go get -u gopkg.in/inconshreveable/log15.v2
 	go get -u github.com/op/go-logging
 	go get -u github.com/cihub/seelog
