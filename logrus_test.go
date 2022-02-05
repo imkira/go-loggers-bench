@@ -3,7 +3,7 @@ package bench
 import (
 	"testing"
 
-	log "github.com/Sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 )
 
 func BenchmarkLogrusTextPositive(b *testing.B) {
